@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.springboot.zinkworks.exception.ErrorMessage;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AccountResponse implements Serializable {
@@ -21,9 +22,9 @@ public class AccountResponse implements Serializable {
 	private String pinNumber;
 	private List<Dinomination> dinominations;
 
-	private ATMError error;
+	// private ErrorMessage error;
 
-	public AccountResponse(long accountNumber, String accountName, int balanceAmount, int odAmount,String pinNumber) {
+	public AccountResponse(long accountNumber, String accountName, int balanceAmount, int odAmount, String pinNumber) {
 		super();
 		this.accountNumber = accountNumber;
 		this.accountName = accountName;
@@ -33,7 +34,7 @@ public class AccountResponse implements Serializable {
 	}
 
 	public AccountResponse(long accountNumber, String accountName, int balanceAmount, int odAmount,
-			int maxWithdrawlAmount, List<Dinomination> dinominations, ATMError error) {
+			int maxWithdrawlAmount, List<Dinomination> dinominations) {
 		super();
 		this.accountNumber = accountNumber;
 		this.accountName = accountName;
@@ -41,10 +42,8 @@ public class AccountResponse implements Serializable {
 		this.odAmount = odAmount;
 		this.maxWithdrawlAmount = maxWithdrawlAmount;
 		this.dinominations = dinominations;
-		this.error = error;
 	}
-	
-	
+
 	public AccountResponse(long accountNumber) {
 		super();
 		this.accountNumber = accountNumber;
@@ -98,14 +97,6 @@ public class AccountResponse implements Serializable {
 		this.dinominations = dinominations;
 	}
 
-	public ATMError getATMError() {
-		return error;
-	}
-
-	public void setATMError(ATMError error) {
-		this.error = error;
-	}
-	
 	@JsonIgnore
 	public String getPinNumber() {
 		return pinNumber;

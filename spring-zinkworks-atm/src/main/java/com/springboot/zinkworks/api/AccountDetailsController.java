@@ -4,6 +4,8 @@
 package com.springboot.zinkworks.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,9 +29,9 @@ public class AccountDetailsController {
 	
 	@PostMapping("/accountDetails")
 	@ResponseBody
-	public AccountResponse fetchAccountDetails(@RequestBody AccountRequest account) {
+	public ResponseEntity<AccountResponse> fetchAccountDetails(@RequestBody AccountRequest account) {
 		
-		return validateAccountService.validateFetchAccount(account);
+		return new ResponseEntity<AccountResponse>(validateAccountService.validateFetchAccount(account),HttpStatus.OK);
 		
 	}
 	

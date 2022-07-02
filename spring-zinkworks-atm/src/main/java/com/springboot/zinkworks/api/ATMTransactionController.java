@@ -1,6 +1,8 @@
 package com.springboot.zinkworks.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,10 +34,10 @@ public class ATMTransactionController {
 
 	@PostMapping("/withdrawl")
 	@ResponseBody
-	public AccountResponse withdrawlBalanceCheck(@RequestBody AccountRequest account) {
+	public ResponseEntity<AccountResponse> withdrawlBalanceCheck(@RequestBody AccountRequest account) {
 		AccountResponse accountRepo = validateAccountService.validateFetchAccount(account);
 		
-		return atmTransactionService.doWithDrawl(account,accountRepo);
+		return new ResponseEntity<AccountResponse>(atmTransactionService.doWithDrawl(account,accountRepo), HttpStatus.OK);
 
 	}
 
