@@ -1,6 +1,7 @@
 /**
  * 
  */
+
 package com.springboot.zinkworks.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +21,25 @@ import com.springboot.zinkworks.service.ValidateAccountService;
  * @author BHARGAV
  *
  */
+
 @RestController
+
 @RequestMapping("zinkworks")
 public class AccountDetailsController {
 
 	@Autowired
 	ValidateAccountService validateAccountService;
-	
+
+	/**
+	 * @param account
+	 * @return
+	 */
 	@PostMapping("/accountDetails")
 	@ResponseBody
 	public ResponseEntity<AccountResponse> fetchAccountDetails(@RequestBody AccountRequest account) {
-		
-		return new ResponseEntity<AccountResponse>(validateAccountService.validateFetchAccount(account),HttpStatus.OK);
-		
+
+		return new ResponseEntity<AccountResponse>(validateAccountService.validateFetchAccount(account), HttpStatus.OK);
+
 	}
-	
-	
+
 }

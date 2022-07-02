@@ -16,6 +16,9 @@ public class ATMAdminController {
 	@Autowired
 	MinNotesDesponserUtil minNotesDesponserUtil;
 	
+	/**
+	 * @return
+	 */
 	@GetMapping("/atmBalance")
 	public ATM fetchATMBalance()
 	{

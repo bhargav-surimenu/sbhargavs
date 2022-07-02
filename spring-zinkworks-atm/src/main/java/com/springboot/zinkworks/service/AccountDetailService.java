@@ -14,6 +14,10 @@ import com.springboot.zinkworks.model.AccountResponse;
 @Service("accountDetailService")
 public class AccountDetailService {
 
+	/**
+	 * @param accountNo
+	 * @return
+	 */
 	public AccountResponse fetchAccountDetails(String accountNo) {
 
 		long accountNumber = Long.parseLong(accountNo);
@@ -26,6 +30,10 @@ public class AccountDetailService {
 
 	}
 
+	/**
+	 * @param accountNo
+	 * @return
+	 */
 	public AccountResponse fetchAccountDetails(long accountNo) {
 
 		AccountResponse accountResponse = (AccountResponse) AccountInitializer.getAllAccounts().stream()
@@ -36,6 +44,9 @@ public class AccountDetailService {
 		return accountResponse;
 	}
 
+	/**
+	 * @return
+	 */
 	public List<AccountResponse> fetchAllAccountDetails() {
 
 		return AccountInitializer.getAllAccounts();

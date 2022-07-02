@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.springboot.zinkworks.exception.AccountException;
-import com.springboot.zinkworks.exception.ErrorMessage;
 import com.springboot.zinkworks.init.ATMInitializer;
 import com.springboot.zinkworks.init.AccountInitializer;
 import com.springboot.zinkworks.model.AccountRequest;
@@ -23,13 +22,22 @@ public class ATMTransactionService {
 	@Autowired
 	MinNotesDesponserUtil minNotesDesponserUtil;
 
+	/**
+	 * @param account
+	 * @param accountRepo
+	 * @return
+	 */
 	public AccountResponse doWithDrawl(AccountRequest account, AccountResponse accountRepo) {
+		
 		if (null != accountRepo) {
-			if (account != null && account.getWithdrawlAmount() > 0) {
+			
+			int withDrawlAmnt = account.getWithdrawlAmount();
+			if (account != null && minNotesDesponserUtil.validateWithdrawlAmount(withDrawlAmnt)) {
+				
 				int balanceAmnt = accountRepo.getBalanceAmount();
 				int netBalanceAmnt = balanceAmnt - accountRepo.getOdAmount();
-				int withDrawlAmnt = account.getWithdrawlAmount();
-				if ((ATMInitializer.ATM_Amount >= withDrawlAmnt) && (netBalanceAmnt >= withDrawlAmnt)) {
+				
+				if ((ATMInitializer.getATMBalance() >= withDrawlAmnt) && (netBalanceAmnt >= withDrawlAmnt)) {
 
 					accountRepo.setBalanceAmount(balanceAmnt - withDrawlAmnt);
 
@@ -41,22 +49,21 @@ public class ATMTransactionService {
 
 				} else {
 					System.out.println("Account Balance is Insufficient");
-					//accountRepo.setATMError(new ErrorMessage("5001", "Account Balance is Insufficient"));
 					throw new AccountException("Account Balance is Insufficient");
 				}
 				List<AccountResponse> accounts = AccountInitializer.getAllAccounts();
 				accounts.set(accounts.indexOf(accountRepo), accountRepo);
 			} else {
 				System.out.println("Please Enter valid Withdrawl amount");
-				accountRepo = new AccountResponse(account.getAccountNumber());
 				throw new AccountException("Please Enter valid Withdrawl amount");
 			}
 		} else {	
-			accountRepo = new AccountResponse(account.getAccountNumber());
+			System.out.println("Please check the Account Details Again");
 			throw new AccountException("Please check the Account Details Again");
 		}
 
 		return accountRepo;
 	}
-
+	
+	
 }

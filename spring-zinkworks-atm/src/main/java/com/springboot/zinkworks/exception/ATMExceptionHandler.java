@@ -27,12 +27,12 @@ public class ATMExceptionHandler {
 	@ExceptionHandler(value = {AccountException.class})
 	  public ResponseEntity<ErrorMessage> accountException(AccountException ex, WebRequest request) {
 				 ErrorMessage message = new ErrorMessage(
-	    			        HttpStatus.OK.value(),
+	    			        HttpStatus.BAD_REQUEST.value(),
 	    			        new Date(),
 	    			        ex.getMessage(),
 	    			        request.getDescription(false));
 	    
-	    return new ResponseEntity<ErrorMessage>(message, HttpStatus.OK);
+	    return new ResponseEntity<ErrorMessage>(message, HttpStatus.BAD_REQUEST);
 	  }
 	
 	@ExceptionHandler(value = {ATMException.class})

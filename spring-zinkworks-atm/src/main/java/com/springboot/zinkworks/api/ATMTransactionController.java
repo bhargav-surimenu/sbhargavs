@@ -24,13 +24,7 @@ public class ATMTransactionController {
 	@Autowired
 	ATMTransactionService atmTransactionService;
 
-	@PostMapping("/balanceCheck")
-	@ResponseBody
-	public AccountResponse fetchBalanceCheck(@RequestBody AccountRequest account) {
-
-		return validateAccountService.validateFetchAccount(account);
-
-	}
+	
 
 	@PostMapping("/withdrawl")
 	@ResponseBody

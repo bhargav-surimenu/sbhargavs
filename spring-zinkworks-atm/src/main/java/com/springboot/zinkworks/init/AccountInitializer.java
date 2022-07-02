@@ -15,6 +15,9 @@ public class AccountInitializer {
 		accountResponses.add(new AccountResponse(987654321, "ZinkWorks Irish", 1230, 150,"4321"));
 	}
 
+	/**
+	 * @return
+	 */
 	public static List<AccountResponse> getAllAccounts() {
 		return accountResponses;
 	}

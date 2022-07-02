@@ -5,9 +5,11 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.springboot.zinkworks.exception.ErrorMessage;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(Include.NON_NULL)
 public class AccountResponse implements Serializable {
 
 	/**
@@ -22,8 +24,7 @@ public class AccountResponse implements Serializable {
 	private String pinNumber;
 	private List<Dinomination> dinominations;
 
-	// private ErrorMessage error;
-
+	
 	public AccountResponse(long accountNumber, String accountName, int balanceAmount, int odAmount, String pinNumber) {
 		super();
 		this.accountNumber = accountNumber;
@@ -89,6 +90,7 @@ public class AccountResponse implements Serializable {
 		this.maxWithdrawlAmount = maxWithdrawlAmount;
 	}
 
+	
 	public List<Dinomination> getDinominations() {
 		return dinominations;
 	}

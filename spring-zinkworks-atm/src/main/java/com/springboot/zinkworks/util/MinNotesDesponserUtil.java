@@ -8,12 +8,22 @@ import org.springframework.stereotype.Component;
 import com.springboot.zinkworks.init.ATMInitializer;
 import com.springboot.zinkworks.model.Dinomination;
 
+/**
+ * @author BHARGAV
+ * This is a utility class for dispensing of notes
+ */
 @Component("minNotesDesponserUtil")
 public class MinNotesDesponserUtil {
 
+	public int[] notes = new int[]{ 50, 20, 10, 5};
+	
+	/**
+	 * @param amount
+	 * @return
+	 */
 	public List<Dinomination> dispenseNotes(int amount){
 		
-		int[] notes = new int[]{ 50, 20, 10, 5};
+		int[] notes = new int[]{ 50, 20, 10, 5};//Denominations of Notes
         int[] noteCounter = new int[notes.length];
         List<Dinomination>  denominations = new ArrayList<Dinomination>();
         
@@ -30,6 +40,11 @@ public class MinNotesDesponserUtil {
         return denominations;
     }
 	
+	/**
+	 * @param atmDinominations
+	 * @param transactionDinomination
+	 * @return
+	 */
 	public List<Dinomination> deductDinomination(List<Dinomination> atmDinominations, List<Dinomination> transactionDinomination) {
 	
 		 for (int i = 0; i < atmDinominations.size(); i++) {
@@ -48,6 +63,26 @@ public class MinNotesDesponserUtil {
 		 return atmDinominations;
 	}
 	
-	
-	
+	/**
+	 * @param withDrawlAmount
+	 * @return
+	 */
+	public boolean validateWithdrawlAmount(int withDrawlAmount) {
+		boolean flag = false;
+		if (withDrawlAmount >= 5) {
+			int notesDenominationsLenght = notes.length;
+			for (int i = 0; i < notesDenominationsLenght; i++) {
+				if (withDrawlAmount % notes[i] != 0) {
+					flag = false;
+				} else {
+					flag = true;
+				}
+			}
+		} else {
+			flag = false;
+		}
+
+		return flag;
+	}
+
 }

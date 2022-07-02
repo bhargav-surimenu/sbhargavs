@@ -21,6 +21,9 @@ public class ATMInitializer {
 		dinominations.add(new Dinomination(5,20));
 	}
 
+	/**
+	 * @return
+	 */
 	public static List<Dinomination> getATMDinominations() {
 		return dinominations;
 	}
