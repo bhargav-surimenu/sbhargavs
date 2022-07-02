@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.springboot.zinkworks.exception.ResourceNotFoundException;
 import com.springboot.zinkworks.init.AccountInitializer;
+import com.springboot.zinkworks.model.AccountRequest;
 import com.springboot.zinkworks.model.AccountResponse;
 
 /**
@@ -15,17 +17,18 @@ import com.springboot.zinkworks.model.AccountResponse;
 public class AccountDetailService {
 
 	/**
-	 * @param accountNo
+	 * @param account
 	 * @return
 	 */
-	public AccountResponse fetchAccountDetails(String accountNo) {
+	public AccountResponse fetchAccountDetails(AccountRequest account) {
 
-		long accountNumber = Long.parseLong(accountNo);
 		AccountResponse accountResponse = (AccountResponse) AccountInitializer.getAllAccounts().stream()
-				.filter(accNo -> accNo.getAccountNumber() == accountNumber).findFirst().orElse(null);
+				.filter(accNo -> accNo.getAccountNumber() == account.getAccountNumber()).findFirst()
+				.orElseThrow(() -> new ResourceNotFoundException("Account Not Found"));
 
 		// Maximum withdrawl limit
 		accountResponse.setMaxWithdrawlAmount(accountResponse.getBalanceAmount() - accountResponse.getOdAmount());
+		accountResponse.setDinominations(null);
 		return accountResponse;
 
 	}
@@ -37,10 +40,12 @@ public class AccountDetailService {
 	public AccountResponse fetchAccountDetails(long accountNo) {
 
 		AccountResponse accountResponse = (AccountResponse) AccountInitializer.getAllAccounts().stream()
-				.filter(accNo -> accNo.getAccountNumber() == accountNo).findFirst().orElse(null);
+				.filter(accNo -> accNo.getAccountNumber() == accountNo).findFirst()
+				.orElseThrow(() -> new ResourceNotFoundException("Account Not Found"));
 
 		// Maximum withdrawl limit
 		accountResponse.setMaxWithdrawlAmount(accountResponse.getBalanceAmount() - accountResponse.getOdAmount());
+		accountResponse.setDinominations(null);
 		return accountResponse;
 	}
 

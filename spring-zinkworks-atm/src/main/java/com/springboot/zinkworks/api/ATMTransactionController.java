@@ -24,8 +24,6 @@ public class ATMTransactionController {
 	@Autowired
 	ATMTransactionService atmTransactionService;
 
-	
-
 	@PostMapping("/withdrawl")
 	@ResponseBody
 	public ResponseEntity<AccountResponse> withdrawlBalanceCheck(@RequestBody AccountRequest account) {

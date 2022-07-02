@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.zinkworks.model.AccountRequest;
 import com.springboot.zinkworks.model.AccountResponse;
-import com.springboot.zinkworks.service.ValidateAccountService;
+import com.springboot.zinkworks.service.AccountDetailService;
 
 /**
  * @author BHARGAV
@@ -28,7 +28,7 @@ import com.springboot.zinkworks.service.ValidateAccountService;
 public class AccountDetailsController {
 
 	@Autowired
-	ValidateAccountService validateAccountService;
+	AccountDetailService accountDetailService;
 
 	/**
 	 * @param account
@@ -38,7 +38,7 @@ public class AccountDetailsController {
 	@ResponseBody
 	public ResponseEntity<AccountResponse> fetchAccountDetails(@RequestBody AccountRequest account) {
 
-		return new ResponseEntity<AccountResponse>(validateAccountService.validateFetchAccount(account), HttpStatus.OK);
+		return new ResponseEntity<AccountResponse>(accountDetailService.fetchAccountDetails(account), HttpStatus.OK);
 
 	}
 
