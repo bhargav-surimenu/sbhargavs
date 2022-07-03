@@ -13,7 +13,7 @@ import com.springboot.zinkworks.model.Dinomination;
  * This is a utility class for dispensing of notes
  */
 @Component("minNotesDesponserUtil")
-public class MinNotesDesponserUtil {
+public class NotesDispenserUtil {
 
 	public int[] notes = new int[]{ 50, 20, 10, 5};
 	

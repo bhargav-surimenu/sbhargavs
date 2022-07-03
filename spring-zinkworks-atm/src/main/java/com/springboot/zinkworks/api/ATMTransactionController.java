@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.springboot.zinkworks.model.AccountRequest;
 import com.springboot.zinkworks.model.AccountResponse;
 import com.springboot.zinkworks.service.ATMTransactionService;
-import com.springboot.zinkworks.service.ValidateAccountService;
+import com.springboot.zinkworks.service.AccountDetailService;
 
 @RestController
 @RequestMapping("zinkworks")
 public class ATMTransactionController {
 
 	@Autowired
-	ValidateAccountService validateAccountService;
+	AccountDetailService accountDetailService;
 
 	@Autowired
 	ATMTransactionService atmTransactionService;
@@ -27,7 +27,7 @@ public class ATMTransactionController {
 	@PostMapping("/withdrawl")
 	@ResponseBody
 	public ResponseEntity<AccountResponse> withdrawlBalanceCheck(@RequestBody AccountRequest account) {
-		AccountResponse accountRepo = validateAccountService.validateFetchAccount(account);
+		AccountResponse accountRepo = accountDetailService.fetchAccountDetails(account);
 		
 		return new ResponseEntity<AccountResponse>(atmTransactionService.doWithDrawl(account,accountRepo), HttpStatus.OK);
 

@@ -1,27 +1,27 @@
 package com.springboot.zinkworks.api;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.zinkworks.init.ATMInitializer;
-import com.springboot.zinkworks.model.ATM;
-import com.springboot.zinkworks.util.MinNotesDesponserUtil;
+import com.springboot.zinkworks.model.ATMResponse;
 
 @RestController
 @RequestMapping("zinkworks")
 public class ATMAdminController {
 
-	@Autowired
-	MinNotesDesponserUtil minNotesDesponserUtil;
-	
 	/**
 	 * @return
 	 */
 	@GetMapping("/atmBalance")
-	public ATM fetchATMBalance()
-	{
-		return new ATM(1002,"IRLAND",ATMInitializer.getATMBalance(),ATMInitializer.getATMDinominations()); 
+	@ResponseBody
+	public ResponseEntity<ATMResponse> fetchATMBalance() {
+		return new ResponseEntity<ATMResponse>(
+				new ATMResponse(1002, "IRLAND", ATMInitializer.getATMBalance(), ATMInitializer.getATMDinominations()),
+				HttpStatus.OK);
 	}
 }

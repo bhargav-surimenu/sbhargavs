@@ -11,16 +11,13 @@ import com.springboot.zinkworks.init.AccountInitializer;
 import com.springboot.zinkworks.model.AccountRequest;
 import com.springboot.zinkworks.model.AccountResponse;
 import com.springboot.zinkworks.model.Dinomination;
-import com.springboot.zinkworks.util.MinNotesDesponserUtil;
+import com.springboot.zinkworks.util.NotesDispenserUtil;
 
 @Service("atmTransactionService")
 public class ATMTransactionService {
 
 	@Autowired
-	AccountDetailService accountDetailService;
-
-	@Autowired
-	MinNotesDesponserUtil minNotesDesponserUtil;
+	NotesDispenserUtil minNotesDesponserUtil;
 
 	/**
 	 * @param account
@@ -28,15 +25,15 @@ public class ATMTransactionService {
 	 * @return
 	 */
 	public AccountResponse doWithDrawl(AccountRequest account, AccountResponse accountRepo) {
-		
+
 		if (null != accountRepo) {
-			
+
 			int withDrawlAmnt = account.getWithdrawlAmount();
 			if (account != null && minNotesDesponserUtil.validateWithdrawlAmount(withDrawlAmnt)) {
-				
+
 				int balanceAmnt = accountRepo.getBalanceAmount();
 				int netBalanceAmnt = balanceAmnt - accountRepo.getOdAmount();
-				
+
 				if ((ATMInitializer.getATMBalance() >= withDrawlAmnt) && (netBalanceAmnt >= withDrawlAmnt)) {
 
 					accountRepo.setBalanceAmount(balanceAmnt - withDrawlAmnt);
@@ -57,12 +54,12 @@ public class ATMTransactionService {
 				System.out.println("Please Enter valid Withdrawl amount");
 				throw new AccountException("Please Enter valid Withdrawl amount");
 			}
-		} else {	
+		} else {
 			System.out.println("Please check the Account Details Again");
 			throw new AccountException("Please check the Account Details Again");
 		}
 
 		return accountRepo;
 	}
-		
+
 }

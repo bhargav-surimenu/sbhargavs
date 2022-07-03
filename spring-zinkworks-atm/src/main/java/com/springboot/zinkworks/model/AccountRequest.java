@@ -11,12 +11,19 @@ public class AccountRequest implements Serializable {
 	private long accountNumber;
 	private String pinNumber;
 	private int withdrawlAmount;
-	public AccountRequest(long accountNumber, String accountName, int balanceAmount, int odAmount, String pinNumber,
-			int withdrawlAmount) {
+	
+
+	public AccountRequest(long accountNumber, String pinNumber, int withdrawlAmount) {
 		super();
 		this.accountNumber = accountNumber;
 		this.pinNumber = pinNumber;
 		this.withdrawlAmount = withdrawlAmount;
+	}
+	
+	public AccountRequest(long accountNumber, String pinNumber) {
+		super();
+		this.accountNumber = accountNumber;
+		this.pinNumber = pinNumber;
 	}
 
 	public long getAccountNumber() {

@@ -3,7 +3,7 @@ package com.springboot.zinkworks.model;
 import java.io.Serializable;
 import java.util.List;
 
-public class ATM implements Serializable{
+public class ATMResponse implements Serializable{
 
 	/**
 	 * 
@@ -32,11 +32,11 @@ public class ATM implements Serializable{
 	public void setBalanceAmount(int balanceAmount) {
 		this.balanceAmount = balanceAmount;
 	}
-	public ATM(int atmNumber) {
+	public ATMResponse(int atmNumber) {
 		super();
 		this.atmNumber = atmNumber;
 	}
-	public ATM(int atmNumber, String atmLocation, int balanceAmount, List<Dinomination> atmDinominations) {
+	public ATMResponse(int atmNumber, String atmLocation, int balanceAmount, List<Dinomination> atmDinominations) {
 		super();
 		this.atmNumber = atmNumber;
 		this.atmLocation = atmLocation;

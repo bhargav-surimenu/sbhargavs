@@ -1,9 +1,8 @@
 package com.springboot.zinkworks.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
+import com.springboot.zinkworks.exception.AccountException;
 import com.springboot.zinkworks.exception.ResourceNotFoundException;
 import com.springboot.zinkworks.init.AccountInitializer;
 import com.springboot.zinkworks.model.AccountRequest;
@@ -18,15 +17,19 @@ public class AccountDetailService {
 
 	/**
 	 * @param account
-	 * @return
+	 * @return AccountResponse
 	 */
 	public AccountResponse fetchAccountDetails(AccountRequest account) {
 
 		AccountResponse accountResponse = (AccountResponse) AccountInitializer.getAllAccounts().stream()
 				.filter(accNo -> accNo.getAccountNumber() == account.getAccountNumber()).findFirst()
 				.orElseThrow(() -> new ResourceNotFoundException("Account Not Found"));
-
-		// Maximum withdrawl limit
+		
+		if(!validateAccountPin(account.getPinNumber(),accountResponse.getPinNumber())){
+			throw new AccountException("Please check the Account Details Again");
+		}	
+		
+		// Maximum with drawl limit
 		accountResponse.setMaxWithdrawlAmount(accountResponse.getBalanceAmount() - accountResponse.getOdAmount());
 		accountResponse.setDinominations(null);
 		return accountResponse;
@@ -34,27 +37,12 @@ public class AccountDetailService {
 	}
 
 	/**
-	 * @param accountNo
-	 * @return
+	 * @param inputPin
+	 * @param accountpin
+	 * @return boolean
 	 */
-	public AccountResponse fetchAccountDetails(long accountNo) {
-
-		AccountResponse accountResponse = (AccountResponse) AccountInitializer.getAllAccounts().stream()
-				.filter(accNo -> accNo.getAccountNumber() == accountNo).findFirst()
-				.orElseThrow(() -> new ResourceNotFoundException("Account Not Found"));
-
-		// Maximum withdrawl limit
-		accountResponse.setMaxWithdrawlAmount(accountResponse.getBalanceAmount() - accountResponse.getOdAmount());
-		accountResponse.setDinominations(null);
-		return accountResponse;
-	}
-
-	/**
-	 * @return
-	 */
-	public List<AccountResponse> fetchAllAccountDetails() {
-
-		return AccountInitializer.getAllAccounts();
+	private boolean validateAccountPin(String inputPin, String accountpin) {
+		return (accountpin.equals(inputPin)) ? true : false;
 	}
 
 }
